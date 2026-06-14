@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна сторінка</title>
+</head>
+<body>
+
+<h1>№1</h1>
+<script>
+    let userName = prompt("Як вас звати?");
+    alert("Привіт, " + userName + "!");
+</script>
+
+<h1>№2</h1>
+<script>
+    let year = prompt("Коли ви народилися?");
+    const NOW = 2026;
+    let yearsOld = NOW - Number(year);
+    alert("Вам " + yearsOld + " років");
+</script>
+
+<h1>№3</h1>
+<script>
+    let a = prompt("Яка довжина сторони вашого квадрата?");
+    let P = Number(a) * 4;
+    alert("У вашого квадрата периметр " + P + " см");
+</script>
+
+<h1>№4</h1>
+<script>
+    let r = prompt("Напишіть радіус вашого кола:");
+    let S = Math.PI * Number(r) * Number(r);
+    alert("Площа кола: " + S.toFixed(2));
+</script>
+
+<h1>№5</h1>
+<script>
+    let s = prompt("Відстань між містами (км):");
+    let t = prompt("За який час хочете подолати відстань (год)?");
+    let v = Number(s) / Number(t);
+    alert("Швидкість: " + v.toFixed(1) + " км/год");
+</script>
+
+<h1>№6</h1>
+<script>
+    const USD_TO_EUR = 0.92;
+    let dollars = prompt("Введіть суму в доларах:");
+    let euros = Number(dollars) * USD_TO_EUR;
+    alert(dollars + " USD = " + euros.toFixed(2) + " EUR");
+</script>
+
+<h1>№7</h1>
+<script>
+    let gb = Number(prompt("Введіть розмір своєї флешки(ГБ): "));
+    let mb = 1024 * gb;
+    let fileSize = 820;
+    let count   = Math.floor(mb / fileSize);
+    alert("На флешку вміститься " + count + " файлів по 820 МБ");
+</script>
+
+<h1>№8</h1>
+<script>
+    let userMoney = Number(prompt("Введіть суму грошей у вашому кармані: "));
+    let price = Number(prompt("Введіть ціну 1 шоколадки: "));
+    let chocled = Math.floor(userMoney / price);
+    let change = userMoney % price;
+    alert("Ви купили " + chocled + " шоколадок");
+    alert("Здача "+ change );
+</script>
+
+<h1>№9</h1>
+<script>
+    let number = Number(prompt("Введіть тризначне ціле число: "));
+    let d1 = Math.floor(number / 100);
+    let d2 = Math.floor(number / 10);
+    let d3 = number % 10;
+    let palindrome = d3 * 100 + d2 * 10 + d1;
+    alert("Паліндром: "+ palindrome);
+</script>
+
+<h1>№10</h1>
+<script>
+    let num = Number(prompt("Введіть ціле число:"));
+    let isEven  = num % 2 === 0;
+    let result  = isEven && "Парне" || "Непарне";
+    alert(num + " — " + result);
+</script>
+</body>
+</html>

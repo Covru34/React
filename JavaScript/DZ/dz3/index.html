@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Поні з MLP</title>
+</head>
+<body>
+
+<h1>Мої улюблені поні</h1>
+
+<div id="list"></div>
+
+<script>
+    let ponies = [
+        { name: "Fluttershy", img: "img/1.webp" },
+        { name: "AppleJack",  img: "img/2.webp" },
+        { name: "Rarity",     img: "img/3.webp" }
+    ]
+
+    let list = document.getElementById("list");
+
+    for (let i = 0; i < ponies.length; i++) {
+        list.innerHTML += `
+      <img src="${ponies[i].img}">
+      <p>${ponies[i].name}</p>
+    `;
+    }
+</script>
+
+</body>
+</html>

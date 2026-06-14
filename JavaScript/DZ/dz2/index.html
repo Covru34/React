@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Фото поні</title>
+</head>
+<body>
+
+<h1>Цикл for</h1>
+<script>
+    let pony = [
+        "img/1.webp",
+        "img/2.webp",
+        "img/3.webp"
+    ];
+
+    for (let i = 0; i < pony.length; i++) {
+        document.writeln("<img src='" + pony[i] + "' width='300'>");
+    }
+</script>
+
+<h1>Цикл while</h1>
+<script>
+    let photos = [
+        "img/1.webp",
+        "img/2.webp",
+        "img/3.webp"  
+    ];
+
+    let i = 0;
+    while (i < photos.length) {
+        document.writeln("<img src='" + photos[i] + "' width='300'>");
+        i++;
+    }
+</script>
+
+</body>
+</html>
