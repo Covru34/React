@@ -6,38 +6,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (() => { //тут оголошується аноміна функція, яка є закритою для іншого коду
-        'use strict' //Вказуємо, що у нас буде строгий режим - новий JavaScript ES5 - підтримуємо веб браузер
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        //Елементів із класом .needs-validation - може бути багато через це - тут масив
-        const forms = document.querySelectorAll('.needs-validation') // Шукаємо елемент із класом .needs-validation
-
-        // Loop over them and prevent submission
-        //Перебираємо усі елементи масиву
-        //Елементи масиву містять у собі форму
-        Array.from(forms).forEach(form => {
-            //Для певної форми прив'язуємо обробку події
-            //submit - коли нажимаємо кнопку Реєструватися
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) { //Викликаємо checkValidity для форми і воно саме робить валідацію
-                    event.preventDefault() //Якщо не валідна форма, то роботу форми зупиняємо
-                    event.stopPropagation() //Видміняємо усі інші події
-                }
-                else {
-                    event.preventDefault() //тут я перехоплюю роботу форми і хочу подивитися дані форми
-                    console.log("Усе добре. Я тут працюю");
-                }
-
-                //Додаємо клас до форми
-                form.classList.add('was-validated') //Відображаємо помилки по валідації для форми
-            }, false)
-        })
-    })() //Тут ми викликаємо анонімну функцію, щоб код запустився JavaScript
-</script>
-
 <main>
     <h1 class="text-center">Реєстрація користувача</h1>
     <div class="container">
@@ -64,6 +32,7 @@
                     Вкажіть ім'я.
                 </div>
             </div>
+
             <div class="col-md-6">
                 <label for="email" class="form-label">Електронна пошта</label>
                 <input type="email"
@@ -75,6 +44,7 @@
                     Вкажіть пошту.
                 </div>
             </div>
+
             <div class="col-md-6">
                 <label for="password" class="form-label">Пароль</label>
                 <input type="password"
@@ -87,42 +57,109 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
-                <img src="/images/photo.jpg"
-                     class="mx-auto d-block"
-                     style="width: 250px; border-radius: 50%;"
-                     alt="Фото користувача">
+            <div>
+                <label class="col-md-12" for="file">
+                    <img src="/images/avatar.png"
+                         id="avatarView"
+                         class="mx-auto d-block"
+                         role="button"
+                         style="width: 250px; border-radius: 50%;"
+                         alt="Фото користувача">
+                    <span role="button"
+                          class="mx-auto d-block text-center fs-5 text-success"
+                          style="width: 200px">
+                        Натисніть для вибору фото
+                    </span>
+                </label>
+                <input type="file"
+                       id="file"
+                       name="file"
+                       class="d-none"
+                       accept="image/*"/>
             </div>
+
             <div class="col-12">
                 <button class="btn btn-primary" type="submit">Реєстрація користувача</button>
             </div>
-
-
         </form>
     </div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src=" https://cdn.jsdelivr.net/npm/axios@1.18.0/dist/axios.min.js "></script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (() => {
-        'use strict'
+    (() => { //тут оголошується аноміна функція, яка є закритою для іншого коду
+        'use strict' //Вказуємо, що у нас буде строгий режим - новий JavaScript ES5 - підтримуємо веб браузер
+
+
+        //Шукаю інпут із id = file
+        //якщо стоїть . - то пошук по класу
+        const file = document.querySelector('#file');
+        file.addEventListener('change', (e) => {
+            var files = e.target.files;
+            //виводимо файл на консоль, який ми обрали
+            console.log("Select file", e.target.files);
+            if (files && files.length) {
+                const file = files[0];
+                if (/^image\/\w+/.test(file.type)) {
+                    const avatarView = document.querySelector('#avatarView');
+                    avatarView.src = URL.createObjectURL(file);
+                }
+                else
+                {
+                    alert("Оберіть файл фото. Не вірний формат")
+                }
+            }
+            else
+            {
+                alert("Ви не обрали жодного фалу!")
+            }
+        });
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
+        //Елементів із класом .needs-validation - може бути багато через це - тут масив
+        const forms = document.querySelectorAll('.needs-validation') // Шукаємо елемент із класом .needs-validation
 
         // Loop over them and prevent submission
+        //Перебираємо усі елементи масиву
+        //Елементи масиву містять у собі форму
         Array.from(forms).forEach(form => {
+            //Для певної форми прив'язуємо обробку події
+            //submit - коли нажимаємо кнопку Реєструватися
             form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                if (!form.checkValidity()) { //Викликаємо checkValidity для форми і воно саме робить валідацію
+                    event.preventDefault() //Якщо не валідна форма, то роботу форми зупиняємо
+                    event.stopPropagation() //Видміняємо усі інші події
+                }
+                else {
+                    event.preventDefault() //тут я перехоплюю роботу форми і хочу подивитися дані форми
+                    const firstName = form.elements['firstName'].value; //із форми отримую значення firstName
+                    const lastName = form.elements['lastName'].value;
+                    const email = form.elements['email'].value;
+                    const password = form.elements['password'].value;
+                    const strInfo = "ПІБ: " + firstName + " " + lastName + " " + email + " " + password;
+                    // коли ми збираємо дані на сервер ми маємо знати, як сервер буде їх приймати
+                    // бо якщо не вірно вказати дані, нічого не вийде
+                    //графічний інтерфейс swager - для тестування чи працює сервер
+                    //і розуміння того, які дані і як мають передаватися на сервер
+                    //swagger - #1 - має знати тестувальник
+                    //p32 - це наш тестовий сервер
+                    // для відправки запитв на сервер ми можемо використовувати
+                    // fetch - вбудований новий спосіб відправки на сервер
+                    //axios - це спеціальна бібліотека яка більш продвинута і має високий usability-використання і аудиторію
+
+
+
+                    alert(strInfo);
+                    console.log("Усе добре. Я тут працюю");
                 }
 
-                form.classList.add('was-validated')
+                //Додаємо клас до форми
+                form.classList.add('was-validated') //Відображаємо помилки по валідації для форми
             }, false)
         })
-    })()
+    })() //Тут ми викликаємо анонімну функцію, щоб код запустився JavaScript
 </script>
-
 </body>
 </html>
