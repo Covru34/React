@@ -15,7 +15,7 @@ const HomePage = () => {
     return (
         <>
             <h1 className="text-center">Привіт команда :)</h1>
-            <div className="alert alert-info" role="alert">
+            <div className="alert alert-success">
                 Кількість елементів {count}
             </div>
             <button className="btn btn-success" onClick={onHandlePlusClick}>

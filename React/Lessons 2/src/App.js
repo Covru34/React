@@ -7,17 +7,19 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import MainNavbar from "./layouts/main/MainNavbar";
 import QRPage from "./pages/QRPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
 
     return (
         <>
-            <MainNavbar />
+            <MainNavbar/>
             <Routes>
                 <Route path="/">
                     <Route index element={<HomePage/>}/>
                     <Route path="login" element={<LoginPage/>}/>
                     <Route path="register" element={<RegisterPage/>}/>
+                    <Route path="profile" element={<ProfilePage/>}/>
                     <Route path="qr" element={<QRPage/>}/>
                 </Route>
             </Routes>

@@ -14,6 +14,7 @@ const RegisterPage = () => {
             isError: false,
             errorMessage: ""
         });
+
     const [emailValid, setEmailValid] = useState(
         {
             isError: false,
@@ -29,26 +30,12 @@ const RegisterPage = () => {
             isError: false,
             errorMessage: ""
         });
+
     const [photoValid, setPhotoValid] = useState(
         {
             isError: false,
             errorMessage: ""
         });
-
-
-    // Стани для помилок (true/false)
-    const [fullNameError, setFullNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [photoError, setPhotoError] = useState(false);
-
-    // Тексти помилок
-    const [fullNameErrorMsg, setFullNameErrorMsg] = useState("");
-    const [emailErrorMsg, setEmailErrorMsg] = useState("");
-    const [phoneErrorMsg, setPhoneErrorMsg] = useState("");
-    const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
-    const [photoErrorMsg, setPhotoErrorMsg] = useState("");
 
     // ---- Функції валідації ----
     const validateFullName = (value) => {
@@ -68,14 +55,20 @@ const RegisterPage = () => {
         // Простий regex для перевірки email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (value.trim() === "") {
-            setEmailValid({isError: true, errorMessage: "Введіть електрону пошту"});
+            // setEmailError(true);
+            // setEmailErrorMsg("Введіть електронну пошту");
+            setEmailValid({isError: true, errorMessage: "Введіть електронну пошту"});
             return false;
         } else if (!emailRegex.test(value.trim())) {
             setEmailValid({isError: true, errorMessage: "Невірний формат email"});
             return false;
+            // setEmailError(true);
+            // setEmailErrorMsg("Невірний формат email");
         } else {
             setEmailValid({isError: false, errorMessage: ""});
             return true;
+            // setEmailError(false);
+            // setEmailErrorMsg("");
         }
     };
 
@@ -83,13 +76,13 @@ const RegisterPage = () => {
         // Дозволяємо цифри, пробіли, дужки, '+', мінімум 10 цифр
         const cleaned = value.replace(/[^0-9+]/g, "");
         if (cleaned === "") {
-            setPhoneValid({isError: true, errorMessage: "Введіть номер телефону"});
+            setPhoneValid({isError: true, errorMessage: "Введіть номер телефону"})
             return false;
         } else if (cleaned.replace(/[^0-9]/g, "").length < 10) {
-            setPhoneValid({isError: true, errorMessage: "Номер має містити що найменше 10 цифр"});
+            setPhoneValid({isError: true, errorMessage: "Номер має містити щонайменше 10 цифр"})
             return false;
         } else {
-            setPhoneValid({isError: false, errorMessage: ""});
+            setPhoneValid({isError: false, errorMessage: ""})
             return true;
         }
     };
@@ -99,7 +92,7 @@ const RegisterPage = () => {
             setPasswordValid({isError: true, errorMessage: "Введіть пароль"});
             return false;
         } else if (value.length < 6) {
-            setPasswordValid({isError: true, errorMessage: "Пароль має містити що найменше 6 символів"});
+            setPasswordValid({isError: true, errorMessage: "Пароль має містити щонайменше 6 символів"});
             return false;
         } else {
             setPasswordValid({isError: false, errorMessage: ""});
@@ -108,6 +101,7 @@ const RegisterPage = () => {
     };
 
     const validatePhoto = (file) => {
+        console.log("validatePhoto", file);
         if (!file) {
             setPhotoValid({isError: true, errorMessage: "Оберіть фото"});
             return false;
@@ -175,17 +169,13 @@ const RegisterPage = () => {
 
         // Повторно перевіряємо всі поля (на випадок, якщо користувач не вийшов з поля)
         const isValidFullName = validateFullName(fullName); //Валідація виконується асинхронно.
-        const isValidEmail = validateEmail(email); //Валідація виконується асинхронно.
-        const isValidFullName = validateFullName(fullName); //Валідація виконується асинхронно.
-        const isValidFullName = validateFullName(fullName); //Валідація виконується асинхронно.
-        const isValidFullName = validateFullName(fullName); //Валідація виконується асинхронно.
-        validateEmail(email);
-        validatePhone(phone);
-        validatePassword(password);
-        validatePhoto(photo);
+        const isValidEmail =  validateEmail(email);
+        const isValidPhone = validatePhone(phone);
+        const isValidPassword = validatePassword(password);
+        const isPhoto =  validatePhoto(photo);
 
         // Якщо є хоч одна помилка – не відправляємо
-        if (!isValidFullName || !isValidEmail || phoneError || passwordError || photoError) {
+        if (!isValidFullName || !isValidEmail || !isValidPhone || !isValidPassword || !isPhoto) {
             alert("Будь ласка, виправте помилки у формі");
             return;
         }
@@ -207,17 +197,13 @@ const RegisterPage = () => {
         setPhoto(null);
         setPhotoPreview("");
         // Скидаємо помилки
-        // setFullNameError(false);
-        // setFullNameErrorMsg("");
-        // setFullNameValid({isError: false, errorMessage: ""});
-        // setEmailError(false);
-        // setEmailErrorMsg("");
-        // setPhoneError(false);
-        // setPhoneErrorMsg("");
-        // setPasswordError(false);
-        // setPasswordErrorMsg("");
-        // setPhotoError(false);
-        // setPhotoErrorMsg("");
+
+        setFullNameValid({isError: false, errorMessage: ""});
+        setEmailValid({isError: false, errorMessage: ""});
+        setPhoneValid({isError: false, errorMessage: ""});
+        setPasswordValid({isError: false, errorMessage: ""});
+        setPhoneValid({isError: false, errorMessage: ""});
+
         // Скидаємо input file (важливо для можливості повторного вибору того ж файлу)
         document.getElementById("photoInput").value = "";
     };
@@ -247,8 +233,6 @@ const RegisterPage = () => {
                     {fullNameValid.isError && <div className="invalid-feedback">{fullNameValid.errorMessage}</div>}
                 </div>
 
-
-
                 {/* Email */}
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Електронна пошта</label>
@@ -260,7 +244,7 @@ const RegisterPage = () => {
                         onChange={onChangeEmail}
                         placeholder="user@example.com"
                     />
-                    {emailValid.isError && <div className="invalid-feedback">{emailValid.isError}</div>}
+                    {emailValid.isError && <div className="invalid-feedback">{emailValid.errorMessage}</div>}
                 </div>
 
                 {/* Телефон */}
@@ -274,7 +258,7 @@ const RegisterPage = () => {
                         onChange={onChangePhone}
                         placeholder="+380501234567"
                     />
-                    {phoneValid.isError && <div className="invalid-feedback">{phoneValid.isError}</div>}
+                    {phoneValid.isError && <div className="invalid-feedback">{phoneValid.errorMessage}</div>}
                 </div>
 
                 {/* Пароль */}
@@ -288,7 +272,7 @@ const RegisterPage = () => {
                         onChange={onChangePassword}
                         placeholder="Мінімум 6 символів"
                     />
-                    {passwordValid.isError && <div className="invalid-feedback">{passwordValid.isError}</div>}
+                    {passwordValid.isError && <div className="invalid-feedback">{passwordValid.errorMessage}</div>}
                 </div>
 
                 {/* Фото */}
@@ -301,7 +285,7 @@ const RegisterPage = () => {
                         accept="image/*"
                         onChange={onChangePhoto}
                     />
-                    {photoValid.isError && <div className="invalid-feedback">{photoValid.isError}</div>}
+                    {photoValid.isError && <div className="invalid-feedback">{photoValid.errorMessage}</div>}
                     {/* Прев'ю фото */}
                     {photoPreview && (
                         <div className="mt-2">
